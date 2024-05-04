@@ -524,8 +524,9 @@ app.post('/charge-card-off-session', async (req, res) => {
 // This example sets up an endpoint using the Express framework.
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
 
-app.post('/payment-sheet', async (_, res) => {
+app.post('/payment-sheet', async (req, res) => {
   const { secret_key } = getKeys();
+  const { amount } = req.body;
 
   const stripe = new Stripe(secret_key as string, {
     apiVersion: '2023-08-16',
@@ -548,7 +549,7 @@ app.post('/payment-sheet', async (_, res) => {
     { apiVersion: '2023-08-16' }
   );
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 5099,
+    amount: amount,
     currency: 'eur',
     customer: customer.id,
     // Edit the following to support different payment methods in your PaymentSheet
