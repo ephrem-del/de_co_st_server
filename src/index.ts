@@ -873,3 +873,5 @@ app.post('/get-payment-option', async (req, res) => {
 app.listen(4242, (): void =>
   console.log(`Node server listening on port ${4242}!`)
 );
+
+export {app};
