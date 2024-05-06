@@ -526,7 +526,7 @@ app.post('/charge-card-off-session', async (req, res) => {
 
 app.post('/payment-sheet', async (req, res) => {
   const { secret_key } = getKeys();
-  const { amount } = req.body;
+  const { amount, orderId } = req.body;
 
   const stripe = new Stripe(secret_key as string, {
     apiVersion: '2023-08-16',
@@ -552,6 +552,9 @@ app.post('/payment-sheet', async (req, res) => {
     amount: amount,
     currency: 'eur',
     customer: customer.id,
+    metadata: {
+      'order_id': orderId
+    },
     // Edit the following to support different payment methods in your PaymentSheet
     // Note: some payment methods have different requirements: https://stripe.com/docs/payments/payment-methods/integration-options
     payment_method_types: [
